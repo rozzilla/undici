@@ -94,5 +94,5 @@ CLAUDE.md
 .claude
 
 # Local tooling
-.githuman/
-.pi/
+.pi
+.githuman

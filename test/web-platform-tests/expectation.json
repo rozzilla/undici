@@ -639,7 +639,7 @@
               "message": "assert_equals: Opaque filter: status is 0 expected 0 but got 200"
             },
             {
-              "name": "Fetch http://web-platform.test:51579/fetch/api/resources/top.txt with no-cors mode",
+              "name": "Fetch http://web-platform.test:33109/fetch/api/resources/top.txt with no-cors mode",
               "success": false,
               "message": "assert_equals: Opaque filter: status is 0 expected 0 but got 200"
             }
@@ -4808,8 +4808,7 @@
             },
             {
               "name": "Consume response's body: from text with correct multipart type to formData with BOM",
-              "success": false,
-              "message": "assert_equals: Retrieve and verify response's body expected \"--boundary-0.35865449327189336\\r\\nContent-Disposition: form-data;name=\\\"name\\\"\\r\\n\\r\\n﻿quick﻿fox﻿\\r\\n--boundary-0.35865449327189336--\\r\\n\" but got \"--boundary-0.35865449327189336\\r\\nContent-Disposition: form-data;name=\\\"name\\\"\\r\\n\\r\\nquick﻿fox﻿\\r\\n--boundary-0.35865449327189336--\\r\\n\""
+              "success": true
             },
             {
               "name": "Consume response's body: from text without correct multipart type to formData (error case)",
@@ -4867,7 +4866,7 @@
             {
               "name": "Consume response's body: from FormData to blob",
               "success": false,
-              "message": "assert_equals: Blob body type should be computed from the response Content-Type expected \"multipart/form-data; boundary=----formdata-undici-014505735818\" but got \"multipart/form-data;boundary=----formdata-undici-014505735818\""
+              "message": "assert_equals: Blob body type should be computed from the response Content-Type expected \"multipart/form-data; boundary=----formdata-undici-071939983636\" but got \"multipart/form-data;boundary=----formdata-undici-071939983636\""
             },
             {
               "name": "Consume response's body: from FormData to text",
@@ -6466,31 +6465,38 @@
             },
             {
               "name": "response.arrayBuffer() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"arrayBuffer-reject\" but got \"next-microtask\" (expected array [\"arrayBuffer-reject\", \"next-microtask\"] got [\"next-microtask\", \"arrayBuffer-reject\"])"
             },
             {
               "name": "response.blob() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"blob-reject\" but got \"next-microtask\" (expected array [\"blob-reject\", \"next-microtask\"] got [\"next-microtask\", \"blob-reject\"])"
             },
             {
               "name": "response.bytes() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"bytes-reject\" but got \"next-microtask\" (expected array [\"bytes-reject\", \"next-microtask\"] got [\"next-microtask\", \"bytes-reject\"])"
             },
             {
               "name": "response.formData() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"formData-reject\" but got \"next-microtask\" (expected array [\"formData-reject\", \"next-microtask\"] got [\"next-microtask\", \"formData-reject\"])"
             },
             {
               "name": "response.json() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"json-reject\" but got \"next-microtask\" (expected array [\"json-reject\", \"next-microtask\"] got [\"next-microtask\", \"json-reject\"])"
             },
             {
               "name": "response.text() rejects if already aborted",
-              "success": true
+              "success": false,
+              "message": "assert_array_equals: expected property 0 to be \"text-reject\" but got \"next-microtask\" (expected array [\"text-reject\", \"next-microtask\"] got [\"next-microtask\", \"text-reject\"])"
             },
             {
               "name": "Call text() twice on aborted response",
-              "success": true
+              "success": false,
+              "message": "promise_rejects_dom: function \"function() { throw e; }\" threw object \"TypeError: Body is unusable: Body has already been read\" that is not a DOMException AbortError: property \"code\" is equal to undefined, expected 20"
             },
             {
               "name": "Already aborted signal does not make request",
@@ -15259,7 +15265,7 @@
           {
             "name": "Response with Cache-Control: max-age=2592000, public and Pragma: no-cache should be cached",
             "success": false,
-            "message": "assert_equals: Responses should be identical, indicating caching expected \"Timestamp: 1769769728.994271\" but got \"Timestamp: 1769769728.9848197\""
+            "message": "assert_equals: Responses should be identical, indicating caching expected \"Timestamp: 1773996244.6096468\" but got \"Timestamp: 1773996244.603523\""
           }
         ]
       },
@@ -24325,7 +24331,7 @@
           {
             "name": "Second fetch returns same response",
             "success": false,
-            "message": "assert_equals: expected \"lwbefdpkiqfhgejhzspj\" but got \"sueymolkqyvlbejzamwn\""
+            "message": "assert_equals: expected \"vhmmzmuiedmnkixrgunw\" but got \"nzxkrnzrelomqitgrzpa\""
           }
         ]
       },
@@ -27398,14 +27404,8 @@
       ]
     },
     "basic-auth.any.html?wpt_flags=h2": {
-      "success": true,
-      "cases": [
-        {
-          "name": "HTTP basic authentication should work with WebSockets",
-          "success": false,
-          "message": "assert_unreached: open should succeed Reached unreachable code"
-        }
-      ]
+      "success": false,
+      "cases": []
     },
     "basic-auth.any.html?wss": {
       "success": true,
@@ -30366,13 +30366,8 @@
         ]
       },
       "001.html?wpt_flags=h2": {
-        "success": true,
-        "cases": [
-          {
-            "name": "001",
-            "success": true
-          }
-        ]
+        "success": false,
+        "cases": []
       },
       "001.html?wss": {
         "success": true,
@@ -30637,7 +30632,7 @@
             {
               "name": "backpressure should be applied to received messages",
               "success": false,
-              "message": "assert_greater_than_equal: data send should have taken at least 2 seconds expected a number greater than or equal to 1.8 but got 0.11555743217468262"
+              "message": "assert_greater_than_equal: data send should have taken at least 2 seconds expected a number greater than or equal to 1.8 but got 0.0830848217010498"
             }
           ]
         },
@@ -30665,187 +30660,16 @@
           "cases": []
         },
         "close.any.html?wpt_flags=h2": {
-          "success": true,
-          "cases": [
-            {
-              "name": "close code should be sent to server and reflected back",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "no close argument should send empty Close frame",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "unspecified close code should send empty Close frame",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "unspecified close code with empty reason should send empty Close frame",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "unspecified close code with non-empty reason should set code to 1000",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close(true) should throw a TypeError",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close() with an overlong reason should throw",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close during handshake should work",
-              "success": true
-            },
-            {
-              "name": "close() with invalid code 999 should throw",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close() with invalid code 1001 should throw",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close() with invalid code 2999 should throw",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close() with invalid code 5000 should throw",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "closing the writable should result in a clean close",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "writer close() promise should not resolve until handshake completes",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "incomplete closing handshake should be considered unclean close",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable should result in a clean close",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable with attributes not wrapped in a WebSocketError should be ignored",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable with a code should send that code",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable with a code and reason should use them",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable with a reason but no code should default the close code",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "aborting the writable with a DOMException not set code or reason",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable should result in a clean close",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable with attributes not wrapped in a WebSocketError should be ignored",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable with a code should send that code",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable with a code and reason should use them",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable with a reason but no code should default the close code",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "canceling the readable with a DOMException not set code or reason",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            }
-          ]
+          "success": false,
+          "cases": []
         },
         "close.any.html?wss": {
           "success": false,
           "cases": []
         },
         "constructor.any.html?wpt_flags=h2": {
-          "success": true,
-          "cases": [
-            {
-              "name": "constructing with no URL should throw",
-              "success": true
-            },
-            {
-              "name": "constructing with an invalid URL should throw",
-              "success": true
-            },
-            {
-              "name": "constructing with invalid options should throw",
-              "success": true
-            },
-            {
-              "name": "protocols should be required to be a list",
-              "success": true
-            },
-            {
-              "name": "constructing with a valid URL should work",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "setting a protocol in the constructor should work",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "connection failure should reject the promises",
-              "success": true
-            },
-            {
-              "name": "wss.opened should resolve to the right types",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            }
-          ]
+          "success": false,
+          "cases": []
         },
         "constructor.any.html?wss": {
           "success": true,
@@ -30920,44 +30744,8 @@
           ]
         },
         "remote-close.any.html?wpt_flags=h2": {
-          "success": true,
-          "cases": [
-            {
-              "name": "clean close should be clean",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "close frame with no body should result in status code 1005",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: unclean close\""
-            },
-            {
-              "name": "reason should be passed through",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: unclean close\""
-            },
-            {
-              "name": "UTF-8 reason should work",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: unclean close\""
-            },
-            {
-              "name": "close with unwritten data should not be considered clean",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "remote code and reason should be used",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "abrupt close should give an error",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            }
-          ]
+          "success": false,
+          "cases": []
         },
         "remote-close.any.html?wss": {
           "success": true,
@@ -31070,39 +30858,8 @@
           ]
         },
         "write.any.html?wpt_flags=h2": {
-          "success": true,
-          "cases": [
-            {
-              "name": "a write that was incomplete at close time should reject",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "garbage collection after close with a pending write promise should not crash",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "writing a value that cannot be stringified should cause a rejection",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "writing a resizable ArrayBuffer should be rejected",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "writing a view on a shared buffer should be rejected",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            },
-            {
-              "name": "Garbage collecting a WebSocket stream doesn't crash while write promise is pending",
-              "success": false,
-              "message": "promise_test: Unhandled rejection with value: object \"WebSocketError: Socket never opened\""
-            }
-          ]
+          "success": false,
+          "cases": []
         },
         "write.any.html?wss": {
           "success": true,
