@@ -639,7 +639,7 @@
               "message": "assert_equals: Opaque filter: status is 0 expected 0 but got 200"
             },
             {
-              "name": "Fetch http://web-platform.test:50771/fetch/api/resources/top.txt with no-cors mode",
+              "name": "Fetch http://web-platform.test:60029/fetch/api/resources/top.txt with no-cors mode",
               "success": false,
               "message": "assert_equals: Opaque filter: status is 0 expected 0 but got 200"
             }
@@ -4866,7 +4866,7 @@
             {
               "name": "Consume response's body: from FormData to blob",
               "success": false,
-              "message": "assert_equals: Blob body type should be computed from the response Content-Type expected \"multipart/form-data; boundary=----formdata-undici-063336922666\" but got \"multipart/form-data;boundary=----formdata-undici-063336922666\""
+              "message": "assert_equals: Blob body type should be computed from the response Content-Type expected \"multipart/form-data; boundary=----formdata-undici-062475584128\" but got \"multipart/form-data;boundary=----formdata-undici-062475584128\""
             },
             {
               "name": "Consume response's body: from FormData to text",
@@ -9433,14 +9433,14 @@
             "success": true
           },
           {
-            "name": "Window interface: calling fetch(RequestInfo, optional RequestInit) on window with too few arguments must throw TypeError",
-            "success": false,
-            "message": "assert_unreached: Should have rejected: Called with 0 arguments Reached unreachable code"
-          },
-          {
             "name": "Window interface: operation fetch(RequestInfo, optional RequestInit)",
             "success": false,
             "message": "assert_unreached: Should have rejected: calling operation with this = {} didn't throw TypeError Reached unreachable code"
+          },
+          {
+            "name": "Window interface: calling fetch(RequestInfo, optional RequestInit) on window with too few arguments must throw TypeError",
+            "success": false,
+            "message": "assert_unreached: Should have rejected: Called with 0 arguments Reached unreachable code"
           }
         ]
       },
@@ -15265,7 +15265,7 @@
           {
             "name": "Response with Cache-Control: max-age=2592000, public and Pragma: no-cache should be cached",
             "success": false,
-            "message": "assert_equals: Responses should be identical, indicating caching expected \"Timestamp: 1774027316.9934711\" but got \"Timestamp: 1774027316.9873664\""
+            "message": "assert_equals: Responses should be identical, indicating caching expected \"Timestamp: 1774110745.180101\" but got \"Timestamp: 1774110745.1738834\""
           }
         ]
       },
@@ -24062,7 +24062,19 @@
               "message": "document is not defined"
             },
             {
-              "name": "Fetch: /images/gr\\neen-1x1.png?img=%3C",
+              "name": "Fetch: /images/green-1x1.png",
+              "success": true
+            },
+            {
+              "name": "Fetch: /images/gre\\nen-1x1.png",
+              "success": true
+            },
+            {
+              "name": "Fetch: /images/gre\\ten-1x1.png",
+              "success": true
+            },
+            {
+              "name": "Fetch: /images/gre\\ren-1x1.png",
               "success": true
             },
             {
@@ -24074,27 +24086,15 @@
               "success": true
             },
             {
-              "name": "Fetch: /images/gre\\ren-1x1.png",
-              "success": true
-            },
-            {
-              "name": "Fetch: /images/gr\\reen-1x1.png?img=%3C",
-              "success": true
-            },
-            {
               "name": "Fetch: /images/green-1x1.png?img=%3C",
               "success": true
             },
             {
-              "name": "Fetch: /images/gre\\ten-1x1.png",
+              "name": "Fetch: /images/gr\\neen-1x1.png?img=%3C",
               "success": true
             },
             {
-              "name": "Fetch: /images/gre\\nen-1x1.png",
-              "success": true
-            },
-            {
-              "name": "Fetch: /images/green-1x1.png",
+              "name": "Fetch: /images/gr\\reen-1x1.png?img=%3C",
               "success": true
             },
             {
@@ -24106,12 +24106,28 @@
               "success": true
             },
             {
-              "name": "Fetch: /images/gr\\neen-1x1.png?img=&#10;",
-              "success": true
+              "name": "Fetch: /images/green-1x1.png?<\\r=block",
+              "success": false,
+              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
             },
             {
               "name": "Fetch: /images/gr\\teen-1x1.png?img=&#10;",
               "success": true
+            },
+            {
+              "name": "Fetch: /images/gre\\ren-1x1.png?img=<",
+              "success": false,
+              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
+            },
+            {
+              "name": "Fetch: /images/gre\\ten-1x1.png?img=<",
+              "success": false,
+              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
+            },
+            {
+              "name": "Fetch: /images/green-1x1.png?<\\n=block",
+              "success": false,
+              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
             },
             {
               "name": "Fetch: /images/gr\\reen-1x1.png?img=&#10;",
@@ -24123,24 +24139,8 @@
               "message": "assert_unreached: Fetch should fail. Reached unreachable code"
             },
             {
-              "name": "Fetch: /images/gre\\ten-1x1.png?img=<",
-              "success": false,
-              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
-            },
-            {
-              "name": "Fetch: /images/green-1x1.png?<\\r=block",
-              "success": false,
-              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
-            },
-            {
-              "name": "Fetch: /images/green-1x1.png?<\\n=block",
-              "success": false,
-              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
-            },
-            {
-              "name": "Fetch: /images/gre\\ren-1x1.png?img=<",
-              "success": false,
-              "message": "assert_unreached: Fetch should fail. Reached unreachable code"
+              "name": "Fetch: /images/gr\\neen-1x1.png?img=&#10;",
+              "success": true
             },
             {
               "name": "Fetch: /images/green-1x1.png?<\\t=block",
@@ -24331,7 +24331,7 @@
           {
             "name": "Second fetch returns same response",
             "success": false,
-            "message": "assert_equals: expected \"yflkiidvobvjxqmematq\" but got \"wjomosulisgpbpjelnug\""
+            "message": "assert_equals: expected \"oxxwxmaepucudtbybaij\" but got \"eejepvpvjzlnzrmyaimq\""
           }
         ]
       },
@@ -39103,7 +39103,7 @@
             {
               "name": "backpressure should be applied to received messages",
               "success": false,
-              "message": "assert_greater_than_equal: data send should have taken at least 2 seconds expected a number greater than or equal to 1.8 but got 0.08487510681152344"
+              "message": "assert_greater_than_equal: data send should have taken at least 2 seconds expected a number greater than or equal to 1.8 but got 0.0826730728149414"
             }
           ]
         },
@@ -43438,11 +43438,11 @@
           "success": true
         },
         {
-          "name": "EventSource: lastEventId resets (id without colon)",
+          "name": "EventSource: lastEventId persists",
           "success": true
         },
         {
-          "name": "EventSource: lastEventId persists",
+          "name": "EventSource: lastEventId resets (id without colon)",
           "success": true
         }
       ]
