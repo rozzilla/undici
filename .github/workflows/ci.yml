@@ -272,7 +272,8 @@ jobs:
       matrix:
         # Node.js 22 is intentionally excluded here: --shared-builtin-undici/undici-path
         # embedding is only validated for supported/current majors.
-        node-version: ['24', '25']
+        # Start validating shared builtin embedding from Node.js 26 onward.
+        node-version: ['26']
         runs-on: ['ubuntu-latest']
     with:
       node-version: ${{ matrix.node-version }}
