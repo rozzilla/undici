@@ -445,7 +445,7 @@ for (const factory of [
     await t.completed
   })
 
-  test('should follow a redirect chain up to the allowed number of times for redirectionLimitReached', async t => {
+  test('should throw when max redirections is reached and throwOnMaxRedirect is enabled', async t => {
     t = tspl(t, { plan: 1 })
 
     const server = await startRedirectingServer()
