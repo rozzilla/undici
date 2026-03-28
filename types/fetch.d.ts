@@ -193,7 +193,7 @@ export declare class Request extends BodyMixin {
   readonly signal: AbortSignal
   readonly duplex: RequestDuplex
 
-  readonly clone: () => Request
+  public clone (): Request
 }
 
 export interface ResponseInit {
@@ -223,7 +223,7 @@ export declare class Response extends BodyMixin {
   readonly url: string
   readonly redirected: boolean
 
-  readonly clone: () => Response
+  public clone (): Response
 
   static error (): Response
   static json (data: any, init?: ResponseInit): Response
