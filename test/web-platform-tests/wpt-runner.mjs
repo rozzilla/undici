@@ -11,7 +11,9 @@ import {
 } from './runner/utils.mjs'
 import * as jsondiffpatch from 'jsondiffpatch'
 
+const REPO_ROOT = join(import.meta.dirname, '..', '..')
 const WPT_DIR = join(import.meta.dirname, 'wpt')
+const WPT_SCRIPT_PATH = join(WPT_DIR, 'wpt')
 const EXPECTATION_PATH = join(import.meta.dirname, 'expectation.json')
 const CA_CERT_PATH = join(import.meta.dirname, 'runner/certs/cacert.pem')
 
@@ -89,6 +91,35 @@ async function terminateProcess (proc, exitPromise) {
   await exitPromise
 }
 
+async function ensureWPTCheckout () {
+  if (existsSync(WPT_SCRIPT_PATH)) {
+    return
+  }
+
+  console.log('WPT checkout missing, attempting to initialize git submodule...')
+
+  const submoduleProc = spawn('git', [
+    'submodule',
+    'update',
+    '--init',
+    '--recursive',
+    '--',
+    'test/web-platform-tests/wpt'
+  ], {
+    cwd: REPO_ROOT,
+    stdio: 'inherit'
+  })
+
+  const submoduleOk = await new Promise(resolve => {
+    submoduleProc.on('exit', code => resolve(code === 0))
+    submoduleProc.on('error', () => resolve(false))
+  })
+
+  if (!submoduleOk || !existsSync(WPT_SCRIPT_PATH)) {
+    throw new Error('WPT checkout is missing. Run `git submodule update --init --recursive test/web-platform-tests/wpt`.')
+  }
+}
+
 async function runWithTestUtil (testFunction) {
   const { promise, resolve, reject } = createDeferredPromise()
   const { promise: readyPromise, resolve: resolveReady, reject: rejectReady } = createDeferredPromise()
@@ -114,7 +145,7 @@ async function runWithTestUtil (testFunction) {
   }
 
   console.log('Starting WPT server...')
-  const proc = spawn('python3', ['wpt', 'serve', '--config', '../runner/config.json'], {
+  const proc = spawn('python3', [WPT_SCRIPT_PATH, 'serve', '--config', '../runner/config.json'], {
     cwd: WPT_DIR,
     stdio: ['ignore', 'pipe', 'pipe']
   })
@@ -448,6 +479,8 @@ function generateWPTReport (results, startTime, endTime) {
 async function setup () {
   console.log('Setting up WPT environment...')
 
+  await ensureWPTCheckout()
+
   // Check Python
   const pythonCheck = spawn('python3', ['--version'], { stdio: 'pipe' })
   pythonCheck.stdout.setEncoding('ascii')
@@ -473,7 +506,7 @@ async function setup () {
   const manifestPath = join(WPT_DIR, 'MANIFEST.json')
   if (!existsSync(manifestPath)) {
     console.log('Updating WPT manifest...')
-    const manifestProc = spawn('python3', ['wpt', 'manifest'], {
+    const manifestProc = spawn('python3', [WPT_SCRIPT_PATH, 'manifest'], {
       cwd: WPT_DIR,
       stdio: 'inherit'
     })
@@ -498,7 +531,7 @@ async function setup () {
   const etcHostsConfigured = hostsContent.includes('web-platform.test')
 
   async function setupHostsFile () {
-    const makeHostsProc = spawn('python3', ['wpt', 'make-hosts-file'], {
+    const makeHostsProc = spawn('python3', [WPT_SCRIPT_PATH, 'make-hosts-file'], {
       cwd: WPT_DIR,
       stdio: ['ignore', 'pipe', 'pipe']
     })
@@ -568,6 +601,8 @@ async function setup () {
 }
 
 async function run (filters = []) {
+  await ensureWPTCheckout()
+
   const startTime = Date.now()
   const expectation = getExpectation()
   const tests = discoverTestsToRun(filters, expectation)
