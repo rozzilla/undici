@@ -59,11 +59,8 @@ jobs:
       fail-fast: false
       max-parallel: 0
       matrix:
-        node-version: ['20', '22', '24', '25']
+        node-version: ['22', '24', '25']
         runs-on: ['ubuntu-latest', 'windows-latest', 'macos-latest']
-        exclude:
-          - node-version: '20'
-            runs-on: windows-latest
     uses: ./.github/workflows/nodejs.yml
     with:
       # Disable coverage on Node.js 25 until https://github.com/nodejs/node/issues/61971 is resolved.
@@ -78,7 +75,7 @@ jobs:
       fail-fast: false
       max-parallel: 0
       matrix:
-        node-version: ['24', '25']
+        node-version: ['22', '24', '25']
         runs-on: ['ubuntu-latest']
     uses: ./.github/workflows/nodejs.yml
     with:
@@ -93,7 +90,7 @@ jobs:
       fail-fast: false
       max-parallel: 0
       matrix:
-        node-version: ['20', '22', '24', '25']
+        node-version: ['22', '24', '25']
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -179,7 +176,7 @@ jobs:
       fail-fast: false
       max-parallel: 0
       matrix:
-        node-version: ['20', '22', '24', '25']
+        node-version: ['22', '24', '25']
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
@@ -273,7 +270,10 @@ jobs:
       fail-fast: false
       max-parallel: 0
       matrix:
-        node-version: ['24', '25']
+        # Node.js 22 is intentionally excluded here: --shared-builtin-undici/undici-path
+        # embedding is only validated for supported/current majors.
+        # Start validating shared builtin embedding from Node.js 26 onward.
+        node-version: ['26']
         runs-on: ['ubuntu-latest']
     with:
       node-version: ${{ matrix.node-version }}
