@@ -41,6 +41,7 @@
   * [Undici Examples](/examples/ "Undici Examples")
 * Best Practices
   * [Undici vs. Built-in Fetch](/docs/best-practices/undici-vs-builtin-fetch.md "When to install undici vs using Node.js built-in fetch")
+  * [Migrating from Undici 7 to 8](/docs/best-practices/migrating-from-v7-to-v8.md "Upgrade applications and libraries from Undici v7 to v8")
   * [Proxy](/docs/best-practices/proxy.md "Connecting through a proxy")
   * [Client Certificate](/docs/best-practices/client-certificate.md "Connect using a client certificate")
   * [Writing Tests](/docs/best-practices/writing-tests.md "Using Undici inside tests")
