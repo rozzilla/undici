@@ -4,11 +4,12 @@ const { tspl } = require('@matteo.collina/tspl')
 const { test, after } = require('node:test')
 const diagnosticsChannel = require('node:diagnostics_channel')
 const { request, fetch, setGlobalDispatcher, getGlobalDispatcher } = require('..')
-const { InvalidArgumentError, SecureProxyConnectionError } = require('../lib/core/errors')
+const { InvalidArgumentError, ConnectTimeoutError, SecureProxyConnectionError } = require('../lib/core/errors')
 const ProxyAgent = require('../lib/dispatcher/proxy-agent')
 const Pool = require('../lib/dispatcher/pool')
 const { createServer } = require('node:http')
 const https = require('node:https')
+const net = require('node:net')
 const { Socket } = require('node:net')
 const { createProxy } = require('proxy')
 
@@ -119,6 +120,58 @@ test('should accept string, URL and object as options', (t) => {
   t.doesNotThrow(() => new ProxyAgent('http://example.com'))
   t.doesNotThrow(() => new ProxyAgent(new URL('http://example.com')))
   t.doesNotThrow(() => new ProxyAgent({ uri: 'http://example.com' }))
+})
+
+test('ProxyAgent forwards connectTimeout to the proxy connector', async (t) => {
+  t = tspl(t, { plan: 4 })
+
+  const originalConnect = net.connect
+  let connect
+  const proxyAgent = new ProxyAgent({
+    uri: 'http://localhost:9000',
+    connectTimeout: 1e3,
+    clientFactory (_origin, options) {
+      connect = options.connect
+      return {
+        close () {
+          return Promise.resolve()
+        },
+        destroy () {
+          return Promise.resolve()
+        }
+      }
+    }
+  })
+
+  try {
+    net.connect = function (options) {
+      return new net.Socket(options)
+    }
+
+    t.ok(typeof connect === 'function')
+
+    const timeout = setTimeout(() => {
+      t.fail('connectTimeout was not forwarded to the proxy connector')
+    }, 2e3)
+
+    await new Promise((resolve, reject) => {
+      connect({ hostname: 'localhost', protocol: 'http:', port: 9000 }, (err) => {
+        try {
+          t.ok(err instanceof ConnectTimeoutError)
+          t.strictEqual(err.code, 'UND_ERR_CONNECT_TIMEOUT')
+          t.strictEqual(err.message, 'Connect Timeout Error (attempted address: localhost:9000, timeout: 1000ms)')
+          clearTimeout(timeout)
+          resolve()
+        } catch (error) {
+          clearTimeout(timeout)
+          reject(error)
+        }
+      })
+    })
+  } finally {
+    net.connect = originalConnect
+    await proxyAgent.close()
+  }
 })
 
 test('use proxy-agent to connect through proxy (keep alive)', async (t) => {
