@@ -127,6 +127,7 @@ test('ProxyAgent forwards connectTimeout to the proxy connector', async (t) => {
 
   const originalConnect = net.connect
   let connect
+  let socket
   const proxyAgent = new ProxyAgent({
     uri: 'http://localhost:9000',
     connectTimeout: 1e3,
@@ -151,11 +152,14 @@ test('ProxyAgent forwards connectTimeout to the proxy connector', async (t) => {
     t.ok(typeof connect === 'function')
 
     const timeout = setTimeout(() => {
+      if (socket && !socket.destroyed) {
+        socket.destroy()
+      }
       t.fail('connectTimeout was not forwarded to the proxy connector')
     }, 2e3)
 
     await new Promise((resolve, reject) => {
-      connect({ hostname: 'localhost', protocol: 'http:', port: 9000 }, (err) => {
+      socket = connect({ hostname: 'localhost', protocol: 'http:', port: 9000 }, (err) => {
         try {
           t.ok(err instanceof ConnectTimeoutError)
           t.strictEqual(err.code, 'UND_ERR_CONNECT_TIMEOUT')
@@ -170,6 +174,9 @@ test('ProxyAgent forwards connectTimeout to the proxy connector', async (t) => {
     })
   } finally {
     net.connect = originalConnect
+    if (socket && !socket.destroyed) {
+      socket.destroy()
+    }
     await proxyAgent.close()
   }
 })
