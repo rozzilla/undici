@@ -2,7 +2,6 @@
 
 const { tspl } = require('@matteo.collina/tspl')
 const { test, after } = require('node:test')
-const { setTimeout: sleep } = require('node:timers/promises')
 const { createServer } = require('node:http')
 const { once } = require('node:events')
 const { tick: fastTimersTick } = require('../lib/util/timers')
@@ -30,14 +29,15 @@ test('https://github.com/nodejs/undici/issues/3356', { skip: process.env.CITGM }
 
   await once(server, 'listening')
 
+  const agent = new RetryAgent(new Agent({ bodyTimeout: 50 }), {
+    errorCodes: ['UND_ERR_BODY_TIMEOUT']
+  })
+
   after(async () => {
+    await agent.close()
     server.close()
 
     await once(server, 'close')
-  })
-
-  const agent = new RetryAgent(new Agent({ bodyTimeout: 50 }), {
-    errorCodes: ['UND_ERR_BODY_TIMEOUT']
   })
 
   const response = await fetch(`http://localhost:${server.address().port}`, {
@@ -45,8 +45,6 @@ test('https://github.com/nodejs/undici/issues/3356', { skip: process.env.CITGM }
   })
 
   fastTimersTick()
-
-  await sleep(500)
 
   try {
     t.equal(response.status, 200)
