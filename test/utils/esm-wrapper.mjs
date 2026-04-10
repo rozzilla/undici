@@ -1,5 +1,4 @@
 import { createServer } from 'node:http'
-import { once } from 'node:events'
 import { test, after } from 'node:test'
 import undici, {
   Agent,
@@ -110,15 +109,13 @@ test('default import top-level request works with opts.dispatcher', async (t) =>
     res.end('ok')
   })
 
-  server.listen(0)
-  await once(server, 'listening')
+  await new Promise((resolve) => server.listen(0, resolve))
 
   const dispatcher = new undici.Agent({ allowH2: true })
 
   t.after(async () => {
     await dispatcher.close()
-    server.close()
-    await once(server, 'close')
+    await new Promise((resolve) => server.close(resolve))
   })
 
   const { statusCode, body } = await undici.request(`http://127.0.0.1:${server.address().port}`, {
